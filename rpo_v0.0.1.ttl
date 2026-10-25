@@ -1,0 +1,257 @@
+@prefix rpo:     <https://w3id.org/rpo#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix voaf:    <http://purl.org/vocommons/voaf#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix vann:    <http://purl.org/vocab/vann/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+
+
+<https://w3id.org/rpo>
+    a owl:Ontology ;
+    dcterms:title "Reuse Pattern Ontology (RPO)"@en ;
+    dcterms:description "Ontology module of the Reuse Pattern Framework (RPF) for describing intended (future) and realised ontology reuse."@en ;
+    vann:preferredNamespacePrefix "rpo" ;
+    vann:preferredNamespaceUri "https://w3id.org/rpo#" ;
+    owl:versionInfo "0.1.0" ;
+    dcterms:license <https://creativecommons.org/licenses/by/4.0/> .
+
+# ---------------------------------------------------------------------------
+# External classes
+# ---------------------------------------------------------------------------
+
+voaf:Vocabulary a owl:Class .
+prov:Entity     a owl:Class .
+
+# ---------------------------------------------------------------------------
+# Classes
+# ---------------------------------------------------------------------------
+
+rpo:Ontology a owl:Class ;
+    rdfs:subClassOf voaf:Vocabulary ;
+    rdfs:label "Ontology"@en ;
+    rdfs:comment "An ontology that acts as a source or target of reuse and can carry reuse specifications."@en .
+
+rpo:OntologyProfile a owl:Class ;
+    rdfs:label "Ontology profile"@en ;
+    rdfs:comment "Descriptive profile of an ontology (e.g. domain, granularity, expressivity, licence) used to judge its suitability for reuse."@en .
+
+rpo:ReuseSpecification a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Reuse specification"@en ;
+    rdfs:comment "A description attached to an ontology that groups its reuse goals, reuse relations, constraints, recommendations and assessments."@en .
+
+rpo:ReuseRelation a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Reuse relation"@en ;
+    rdfs:comment "A (planned or performed) reuse link from a source ontology, characterised by the reuse operation applied, its status and the requirements it satisfies."@en .
+
+rpo:ReuseRecommendation a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Reuse recommendation"@en ;
+    rdfs:comment "Advice on how (or whether) a reuse relation should be realised."@en .
+
+rpo:ReuseAssessment a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Reuse assessment"@en ;
+    rdfs:comment "An evaluation of reuse described in a reuse specification, which may record violated constraints."@en .
+
+rpo:ReuseGoal a owl:Class ;
+    rdfs:label "Reuse goal"@en ;
+    rdfs:comment "The purpose that motivates reuse described in a reuse specification."@en .
+
+rpo:ReuseRequirement a owl:Class ;
+    rdfs:label "Reuse requirement"@en ;
+    rdfs:comment "A requirement that a reuse relation is expected to satisfy."@en .
+
+rpo:ReuseConstraint a owl:Class ;
+    rdfs:label "Reuse constraint"@en ;
+    rdfs:comment "A condition (logical, structural, licensing, etc.) that reuse must respect."@en .
+
+rpo:ReusePattern a owl:Class ;
+    rdfs:label "Reuse pattern"@en ;
+    rdfs:comment "A recurring, named way of reusing ontology content, characterised by the reuse operations it prescribes."@en .
+
+# Blue boxes in the diagram: controlled value sets.
+rpo:ReuseStatus a owl:Class ;
+    rdfs:label "Reuse status"@en ;
+    rdfs:comment "Controlled value describing the lifecycle state of reuse, e.g. intended (future) vs. realised."@en .
+
+rpo:ReuseOperation a owl:Class ;
+    rdfs:label "Reuse operation"@en ;
+    rdfs:comment "Controlled value naming an operation applied when reusing ontology content (e.g. import, extraction, extension)."@en .
+
+# Suggested value-set members (not drawn in the diagram; adjust as needed).
+rpo:Intended a owl:NamedIndividual , rpo:ReuseStatus ;
+    rdfs:label "intended"@en ;
+    rdfs:comment "Reuse is foreseen/offered for the future but not (yet) performed."@en .
+
+rpo:Realised a owl:NamedIndividual , rpo:ReuseStatus ;
+    rdfs:label "realised"@en ;
+    rdfs:comment "Reuse has actually been performed."@en .
+
+rpo:Import a owl:NamedIndividual , rpo:ReuseOperation ;
+    rdfs:label "import"@en .
+
+rpo:Extraction a owl:NamedIndividual , rpo:ReuseOperation ;
+    rdfs:label "extraction"@en .
+
+rpo:Extension a owl:NamedIndividual , rpo:ReuseOperation ;
+    rdfs:label "extension"@en .
+
+rpo:Alignment a owl:NamedIndividual , rpo:ReuseOperation ;
+    rdfs:label "alignment"@en .
+
+# ---------------------------------------------------------------------------
+# Object properties
+# ---------------------------------------------------------------------------
+
+rpo:hasProfile a owl:ObjectProperty ;
+    rdfs:label "has profile"@en ;
+    rdfs:domain rpo:Ontology ;
+    rdfs:range rpo:OntologyProfile .
+
+rpo:hasReuseSpecification a owl:ObjectProperty ;
+    rdfs:label "has reuse specification"@en ;
+    rdfs:domain rpo:Ontology ;
+    rdfs:range rpo:ReuseSpecification .
+
+rpo:hasReuseRelation a owl:ObjectProperty ;
+    rdfs:label "has reuse relation"@en ;
+    rdfs:domain rpo:ReuseSpecification ;
+    rdfs:range rpo:ReuseRelation .
+
+rpo:hasReuseGoal a owl:ObjectProperty ;
+    rdfs:label "has reuse goal"@en ;
+    rdfs:domain rpo:ReuseSpecification ;
+    rdfs:range rpo:ReuseGoal .
+
+rpo:hasConstraint a owl:ObjectProperty ;
+    rdfs:label "has constraint"@en ;
+    rdfs:domain rpo:ReuseSpecification ;
+    rdfs:range rpo:ReuseConstraint .
+
+rpo:hasRecommendation a owl:ObjectProperty ;
+    rdfs:label "has recommendation"@en ;
+    rdfs:domain rpo:ReuseSpecification ;
+    rdfs:range rpo:ReuseRecommendation .
+
+rpo:hasAssessment a owl:ObjectProperty ;
+    rdfs:label "has assessment"@en ;
+    rdfs:domain rpo:ReuseSpecification ;
+    rdfs:range rpo:ReuseAssessment .
+
+# Drawn from ReuseRelation (labelled) and from ReuseSpecification (unlabelled
+# edge into ReuseStatus); domain is therefore the union of both.
+rpo:hasStatus a owl:ObjectProperty , owl:FunctionalProperty ;
+    rdfs:label "has status"@en ;
+    rdfs:domain [ a owl:Class ; owl:unionOf ( rpo:ReuseRelation rpo:ReuseSpecification ) ] ;
+    rdfs:range rpo:ReuseStatus .
+
+rpo:sourceOntology a owl:ObjectProperty ;
+    rdfs:label "source ontology"@en ;
+    rdfs:domain rpo:ReuseRelation ;
+    rdfs:range rpo:Ontology .
+
+rpo:satisfies a owl:ObjectProperty ;
+    rdfs:label "satisfies"@en ;
+    rdfs:domain rpo:ReuseRelation ;
+    rdfs:range rpo:ReuseRequirement .
+
+rpo:hasOperation a owl:ObjectProperty ;
+    rdfs:label "has operation"@en ;
+    rdfs:domain rpo:ReuseRelation ;
+    rdfs:range rpo:ReuseOperation .
+
+rpo:hasRequirement a owl:ObjectProperty ;
+    rdfs:label "has requirement"@en ;
+    rdfs:domain rpo:ReuseSpecification ;
+    rdfs:range rpo:ReuseRequirement .
+
+rpo:patternOperation a owl:ObjectProperty ;
+    rdfs:label "pattern operation"@en ;
+    rdfs:domain rpo:ReusePattern ;
+    rdfs:range rpo:ReuseOperation .
+
+rpo:recommends a owl:ObjectProperty ;
+    rdfs:label "recommends"@en ;
+    rdfs:domain rpo:ReuseRecommendation ;
+    rdfs:range rpo:ReuseRelation .
+
+rpo:violates a owl:ObjectProperty ;
+    rdfs:label "violates"@en ;
+    rdfs:domain rpo:ReuseAssessment ;
+    rdfs:range rpo:ReuseConstraint .
+
+rpo:ReusableComponent a owl:Class ;
+    rdfs:subClassOf prov:Entity ;
+    rdfs:label "Reusable component"@en ;
+    rdfs:comment "A unit of an ontology offered or used for reuse: a term, an axiom set, a module or a design pattern."@en .
+
+rpo:ExtensionPoint a owl:Class ;
+    rdfs:label "Extension point"@en ;
+    rdfs:comment "A designated place (e.g. a class or property meant to be specialised) where a reusable component may be adapted."@en .
+
+rpo:ReuseInstruction a owl:Class ;
+    rdfs:label "Reuse instruction"@en ;
+    rdfs:comment "Prescriptive, step-wise guidance on applying a reuse pattern."@en .
+
+rpo:ReuseAction a owl:Class ;
+    rdfs:subClassOf prov:Activity ;
+    rdfs:label "Reuse action"@en ;
+    rdfs:comment "A concrete activity that performed reuse; links realised reuse to PROV agents and time."@en .
+
+rpo:targetOntology a owl:ObjectProperty ;
+    rdfs:domain rpo:ReuseRelation ; rdfs:range rpo:Ontology .
+
+rpo:hasComponent a owl:ObjectProperty ;
+    rdfs:comment "Links a source ontology to a component it offers for reuse."@en ;
+    rdfs:domain rpo:Ontology ; rdfs:range rpo:ReusableComponent .
+
+rpo:reusesComponent a owl:ObjectProperty ;
+    rdfs:domain rpo:ReuseRelation ; rdfs:range rpo:ReusableComponent .
+
+rpo:identifiesComponent a owl:ObjectProperty ;
+    rdfs:domain rpo:ReusePattern ; rdfs:range rpo:ReusableComponent .
+
+rpo:followsPattern a owl:ObjectProperty ;
+    rdfs:domain rpo:ReuseRelation ; rdfs:range rpo:ReusePattern .
+
+rpo:hasExtensionPoint a owl:ObjectProperty ;
+    rdfs:domain rpo:ReusableComponent ; rdfs:range rpo:ExtensionPoint .
+
+rpo:extensionTerm a owl:ObjectProperty ;
+    rdfs:comment "The ontology term (class/property IRI) acting as the extension point."@en ;
+    rdfs:domain rpo:ExtensionPoint .
+
+rpo:hasInstruction a owl:ObjectProperty ;
+    rdfs:domain rpo:ReusePattern ; rdfs:range rpo:ReuseInstruction .
+
+rpo:componentConstraint a owl:ObjectProperty ;
+    rdfs:domain rpo:ReusableComponent ; rdfs:range rpo:ReuseConstraint .
+
+rpo:componentRequirement a owl:ObjectProperty ;
+    rdfs:domain rpo:ReusableComponent ; rdfs:range rpo:ReuseRequirement .
+
+rpo:includesTerm a owl:ObjectProperty ;
+    rdfs:comment "An ontology term (class, property or individual IRI) that belongs to a reusable component."@en ;
+    rdfs:domain rpo:ReusableComponent .
+
+rpo:operationalisedBy a owl:ObjectProperty ;
+    rdfs:comment "Links a reuse constraint to a SHACL shape that checks it against a target ontology."@en ;
+    rdfs:domain rpo:ReuseConstraint ;
+    rdfs:range <http://www.w3.org/ns/shacl#Shape> .
+
+rpo:aboutComponent a owl:ObjectProperty ;
+    rdfs:comment "The reusable component a recommendation is about."@en ;
+    rdfs:domain rpo:ReuseRecommendation ; rdfs:range rpo:ReusableComponent .
+
+rpo:assessedOntology a owl:ObjectProperty ;
+    rdfs:domain rpo:ReuseAssessment ; rdfs:range rpo:Ontology .
+
+rpo:violatingTerm a owl:ObjectProperty ;
+    rdfs:comment "A term of the assessed ontology that causes a constraint violation."@en ;
+    rdfs:domain rpo:ReuseAssessment .
